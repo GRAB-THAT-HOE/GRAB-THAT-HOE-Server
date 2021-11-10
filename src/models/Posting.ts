@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
+import * as mongoose from "mongoose";
 
-const postingSchema = new mongoose.schema({
+const postingSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
   createdAt: { type: Date, required: true, default: Date.now },
   title: { type: String, required: true },
   location: { type: String, required: true },
   explanation: { type: String, required: true },
-  salary: { type: Number, required: true }, // 월급
+  salary: { type: Number, required: true }, // 일당
   additionalExplanation: { type: String, required: true }, // 추가 설명 사항
   isDisabled: { type: Boolean, required: true, default: false }, // 장애인 희망 여부
   isForeign: { type: Boolean, required: true, default: false }, // 외국인 희망 여부
