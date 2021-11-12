@@ -12,6 +12,12 @@ export default async (req: TokenRequestType, res: Response) => {
         message: "사용자를 찾을 수 없습니다.",
       });
     }
+    if (user.permission === 0) {
+      return res.status(403).json({
+        status: 403,
+        message: "말뚝을 조회할 권한이 없습니다.",
+      });
+    }
     const pins = user.pins;
     return res.status(200).json({
       status: 200,
