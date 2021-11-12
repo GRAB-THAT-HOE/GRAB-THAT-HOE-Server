@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   permission: { type: Number, required: true }, // 0이면 농장주, 1이면 일손 계정
   location: { type: String, required: true },
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  pins: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
 
 const User = mongoose.model("User", userSchema);

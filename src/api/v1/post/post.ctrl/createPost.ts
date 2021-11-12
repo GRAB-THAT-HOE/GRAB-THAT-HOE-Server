@@ -37,7 +37,7 @@ export default async (req: TokenRequestType, res: Response) => {
       startTime: data.startTime,
       endTime: data.endTime,
       breakTime: data.breakTime,
-      people: data.people,
+      peopleNum: data.peopleNum,
     });
     return res.status(200).json({
       status: 200,
