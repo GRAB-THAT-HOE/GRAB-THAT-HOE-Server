@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   introduction: { type: String, required: true },
   permission: { type: Number, required: true }, // 0이면 농장주, 1이면 일손 계정
   location: { type: String, required: true },
-  postings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Posting" }],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
 
 const User = mongoose.model("User", userSchema);
