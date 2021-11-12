@@ -2,9 +2,10 @@ import { Response } from "express";
 import PostRequestType from "../../../../type/PostRequestType";
 import User from "../../../../models/User";
 import Post from "../../../../models/Post";
+import TokenRequestType from "../../../../type/TokenRequestType";
 
-export default async (req, res: Response) => {
-  const { _id } = req.user;
+export default async (req: TokenRequestType, res: Response) => {
+  const _id: string = req.user._id;
   const data: PostRequestType = req.body;
   try {
     const user = await User.findById(_id);
