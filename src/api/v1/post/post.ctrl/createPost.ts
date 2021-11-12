@@ -15,6 +15,12 @@ export default async (req: TokenRequestType, res: Response) => {
         message: "사용자를 찾지 못했습니다.",
       });
     }
+    if (user.permission === 1) {
+      return res.status(403).json({
+        status: 403,
+        message: "포스팅을 조회할 권한이 없습니다.",
+      });
+    }
     await Post.create({
       owner: user._id,
       title: data.title,

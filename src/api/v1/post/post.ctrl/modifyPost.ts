@@ -2,6 +2,7 @@ import { Response } from "express";
 import Post from "../../../../models/Post";
 import TokenRequestType from "../../../../type/TokenRequestType";
 import PostRequestType from "../../../../type/PostRequestType";
+import User from "../../../../models/User";
 
 export default async (req: TokenRequestType, res: Response) => {
   const _id: string = req.user._id;
@@ -15,13 +16,25 @@ export default async (req: TokenRequestType, res: Response) => {
         message: "해당 포스팅을 찾을 수 없습니다.",
       });
     }
+    const user = await User.findById(_id);
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        message: "사용자를 찾을 수 없습니다.",
+      });
+    }
+    if (user.permission === 1) {
+      return res.status(403).json({
+        status: 403,
+        message: "포스팅을 수정할 권한이 없습니다.",
+      });
+    }
     if (String(post.owner) !== _id) {
       return res.status(403).json({
         status: 403,
         message: "포스팅을 수정할 권한이 없습니다.",
       });
     }
-
     post.title = data.title || post.title;
     post.location = data.location || post.location;
     post.explanation = data.explanation || post.explanation;
@@ -38,7 +51,6 @@ export default async (req: TokenRequestType, res: Response) => {
     post.endTime = data.endTime || post.endTime;
     post.breakTime = data.breakTime || post.breakTime;
     post.people = data.people || post.people;
-
     await post.save();
     return res.status(200).json({
       status: 200,

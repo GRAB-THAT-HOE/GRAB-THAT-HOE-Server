@@ -6,6 +6,18 @@ export default async (req: TokenRequestType, res: Response) => {
   const _id: string = req.user._id;
   try {
     const user = await User.findById(_id).populate("posts");
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        message: "사용자를 찾지 못했습니다.",
+      });
+    }
+    if (user.permission === 1) {
+      return res.status(403).json({
+        status: 403,
+        message: "포스팅을 조회할 권한이 없습니다.",
+      });
+    }
     const posts = user.posts;
     return res.status(200).json({
       status: 200,
