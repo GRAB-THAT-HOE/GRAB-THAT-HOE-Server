@@ -16,4 +16,5 @@ export default interface PostRequestType {
   endTime: string;
   breakTime: string;
   imgs: string[];
+  people: number;
 }

@@ -37,6 +37,7 @@ export default async (req: TokenRequestType, res: Response) => {
     post.startTime = data.startTime || post.startTime;
     post.endTime = data.endTime || post.endTime;
     post.breakTime = data.breakTime || post.breakTime;
+    post.people = data.people || post.people;
 
     await post.save();
     return res.status(200).json({

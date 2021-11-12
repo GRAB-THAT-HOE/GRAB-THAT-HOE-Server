@@ -18,6 +18,7 @@ const postingSchema = new mongoose.Schema({
   endTime: { type: String, required: true }, // 근무 마감 시간
   breakTime: { type: String, required: true }, // 휴식 시간
   imgs: [{ type: String }],
+  people: { type: Number, required: true, default: 0 },
 });
 
 const Post = mongoose.model("Post", postingSchema);
