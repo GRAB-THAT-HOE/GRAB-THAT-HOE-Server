@@ -5,7 +5,7 @@ import TokenRequestType from "../../../../type/TokenRequestType";
 export default async (req: TokenRequestType, res: Response) => {
   const _id: string = req.user._id;
   try {
-    const user = await User.findById(_id).populate("pins");
+    const user = await User.findById(_id).populate("pins", "post");
     if (!user) {
       return res.status(404).json({
         status: 404,

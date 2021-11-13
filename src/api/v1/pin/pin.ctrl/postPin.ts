@@ -2,6 +2,7 @@ import { Response } from "express";
 import TokenRequestType from "../../../../type/TokenRequestType";
 import User from "../../../../models/User";
 import Post from "../../../../models/Post";
+import Pin from "../../../../models/Pin";
 
 export default async (req: TokenRequestType, res: Response) => {
   const _id: string = req.user._id;
@@ -27,9 +28,13 @@ export default async (req: TokenRequestType, res: Response) => {
         message: "말뚝 기능을 실행할 포스팅을 찾을 수 없습니다.",
       });
     }
-    user.pins.push(idx);
+    const pin = await Pin.create({
+      owner: _id,
+      post: post._id,
+    });
+    user.pins.push(pin._id);
     await user.save();
-    post.pin += 1;
+    post.pinNum += 1;
     await post.save();
     return res.status(200).json({
       status: 200,

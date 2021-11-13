@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 
-const postingSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
   createdAt: { type: Date, required: true, default: Date.now },
   title: { type: String, required: true },
@@ -18,11 +18,11 @@ const postingSchema = new mongoose.Schema({
   endTime: { type: String, required: true }, // 근무 마감 시간
   breakTime: { type: String, required: true }, // 휴식 시간
   imgs: [{ type: String }],
-  people: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  peopleNum: { type: Number, required: true, default: 0 },
-  pin: { type: Number, required: true, default: 0 },
+  joinedPeople: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  joinedPeopleNum: { type: Number, required: true, default: 0 },
+  pinNum: { type: Number, required: true, default: 0 },
 });
 
-const Post = mongoose.model("Post", postingSchema);
+const Post = mongoose.model("Post", postSchema);
 
 export default Post;
