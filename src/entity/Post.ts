@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-@Entity("post")
+@Entity()
 export default class Post extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;
@@ -67,8 +67,37 @@ export default class Post extends BaseEntity {
   giveSnack: boolean;
 
   @Column()
-  startTime: Date;
+  startDate: Date;
 
   @Column()
+  endDate: Date;
+
+  @Column("time")
+  startTime: Date;
+
+  @Column("time")
   endTime: Date;
+
+  @Column("time")
+  breakTime: Date;
+
+  @Column()
+  img: string;
+
+  // @OneToMany(
+  //   (type) =>
+  // )
+  // joinedPeople:
+
+  @Column({
+    nullable: false,
+    default: 0,
+  })
+  joinedPeopleNum: number;
+
+  @Column({
+    nullable: false,
+    default: 0,
+  })
+  pinNum: number;
 }
