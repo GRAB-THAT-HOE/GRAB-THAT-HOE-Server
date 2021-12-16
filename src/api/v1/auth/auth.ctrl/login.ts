@@ -1,14 +1,19 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../../../../entity/User";
+import { getRepository } from "typeorm";
 
 export default async (req: Request, res: Response) => {
   const { phone } = req.body;
   try {
-    const user = await User.findOne({ phone });
+    const userRepository = await getRepository(User);
+    const user: User = await userRepository.findOne({
+      where: {
+        phone: phone,
+      },
+    });
     const token = jwt.sign(
       {
-        _id: user._id,
         phone: user.phone,
       },
       process.env.JWT_SECRET,
