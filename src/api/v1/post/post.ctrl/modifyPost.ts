@@ -1,35 +1,26 @@
 import { Response } from "express";
-import Post from "../../../../models/Post";
-import TokenRequestType from "../../../../type/TokenRequestType";
 import PostRequestType from "../../../../type/PostRequestType";
-import User from "../../../../models/User";
+import { getRepository } from "typeorm";
+import Post from "../../../../entity/Post";
 
 export default async (req, res: Response) => {
-  const _id: string = req.user._id;
-  const idx: string = req.params.idx;
+  const { phone } = req.user;
+  const { idx } = req.params;
   const data: PostRequestType = req.body;
   try {
-    const post = await Post.findById(idx);
+    const postRepository = getRepository(Post);
+    const post: Post = await postRepository.findOne({
+      where: {
+        id: idx,
+      },
+    });
     if (!post) {
       return res.status(404).json({
         status: 404,
         message: "해당 포스팅을 찾을 수 없습니다.",
       });
     }
-    const user = await User.findById(_id);
-    if (!user) {
-      return res.status(404).json({
-        status: 404,
-        message: "사용자를 찾을 수 없습니다.",
-      });
-    }
-    if (user.permission === 1) {
-      return res.status(403).json({
-        status: 403,
-        message: "포스팅을 수정할 권한이 없습니다.",
-      });
-    }
-    if (String(post.owner) !== _id) {
+    if (post.user !== phone) {
       return res.status(403).json({
         status: 403,
         message: "포스팅을 수정할 권한이 없습니다.",
@@ -57,7 +48,7 @@ export default async (req, res: Response) => {
     post.endTime = data.endTime || post.endTime;
     post.breakTime = data.breakTime || post.breakTime;
 
-    post.save();
+    await post.save();
 
     return res.status(200).json({
       status: 200,
