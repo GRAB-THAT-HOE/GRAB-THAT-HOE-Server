@@ -2,7 +2,7 @@ import { Response } from "express";
 import TokenRequestType from "../../../../type/TokenRequestType";
 import Post from "../../../../models/Post";
 
-export default async (req: TokenRequestType, res: Response) => {
+export default async (req, res: Response) => {
   const _id: string = req.user._id;
   const idx: string = req.params.idx;
   try {

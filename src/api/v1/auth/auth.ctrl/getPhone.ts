@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import User from "../../../../entity/User";
 import { getRepository } from "typeorm";
+import User from "../../../../entity/User";
 
 export default async (req: Request, res: Response) => {
-  const { phone } = req.body;
+  const { phone } = req.params;
   try {
     const userRepository = getRepository(User);
     const user: User = await userRepository.findOne({
@@ -12,25 +11,16 @@ export default async (req: Request, res: Response) => {
         phone: phone,
       },
     });
-    if (!user) {
+    if (user) {
       return res.status(400).json({
         status: 400,
-        message: "해당 전화번호를 가진 계정이 없습니다.",
+        message: "해당 전화번호를 가진 계정이 이미 존재합니다.",
       });
     }
-    const token = jwt.sign(
-      {
-        phone: user.phone,
-      },
-      process.env.JWT_SECRET,
-      {
-        issuer: "grabthathoe",
-      }
-    );
+    // 인증번호 발송 API 사용
     return res.status(200).json({
       status: 200,
-      message: "로그인에 성공했습니다.",
-      token,
+      message: "인증번호가 발송되었습니다.",
     });
   } catch (error) {
     return res.status(500).json({

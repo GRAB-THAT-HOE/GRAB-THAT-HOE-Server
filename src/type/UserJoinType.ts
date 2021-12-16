@@ -3,5 +3,6 @@ export default interface UserJoinType {
   phone: number;
   introduction: string;
   permission: number;
-  location: string;
+  mainlocation: string;
+  sublocation: string;
 }

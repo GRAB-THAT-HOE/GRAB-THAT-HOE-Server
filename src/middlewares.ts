@@ -18,3 +18,5 @@ export const verifyToken = (req, res, next) => {
     });
   }
 };
+
+export const upload = (req, res, next) => {};

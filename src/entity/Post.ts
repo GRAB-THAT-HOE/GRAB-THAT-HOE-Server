@@ -6,9 +6,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import Farmer from "./Farmer";
+import User from "./User";
 
-@Entity()
+@Entity("Post")
 export default class Post extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;
@@ -97,7 +97,10 @@ export default class Post extends BaseEntity {
   breakTime: Date;
 
   @Column()
-  img?: string;
+  img: string;
+
+  @ManyToOne(() => User)
+  user: User;
 
   @Column({
     nullable: false,
@@ -111,11 +114,9 @@ export default class Post extends BaseEntity {
   })
   pinNum: number;
 
-  @ManyToOne(() => Farmer, { onDelete: "SET NULL" })
-  owner: Farmer;
-
   @Column({
     nullable: false,
+    default: 0,
   })
-  fk_farmer_idx: number;
+  isConnected: number;
 }

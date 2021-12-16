@@ -1,5 +1,4 @@
 import "dotenv/config";
-import "./db";
 import * as morgan from "morgan";
 import * as express from "express";
 import * as cors from "cors";
@@ -10,9 +9,12 @@ import connectOptions from "../ormconfig";
 
 const app = express();
 const logger = morgan("dev");
+const bodyParser = require("body-parser");
 
 app.use(cors());
 app.use(logger);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", api);
 app.use("/public", express.static(path.join(__dirname, "../public")));
 

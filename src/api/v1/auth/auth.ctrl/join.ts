@@ -1,9 +1,11 @@
 import "dotenv/config";
-import User from "../../../../models/User";
+import User from "../../../../entity/User";
 import { Request, Response } from "express";
 import UserJoinType from "../../../../type/UserJoinType";
 
 export default async (req: Request, res: Response) => {
+  const user = new User();
+
   const data: UserJoinType = req.body;
   try {
     if (data.permission !== 0 && data.permission !== 1) {
@@ -18,13 +20,16 @@ export default async (req: Request, res: Response) => {
         message: "소개글의 길이가 한도를 초과했습니다.",
       });
     }
-    await User.create({
-      name: data.name,
-      phone: data.phone,
-      introduction: data.introduction,
-      permission: data.permission,
-      location: data.location,
-    });
+
+    user.phone = data.phone;
+    user.name = data.name;
+    user.introduction = data.introduction ? data.introduction : "";
+    user.permission = data.permission;
+    user.mainlocation = data.mainlocation;
+    user.sublocation = data.sublocation;
+
+    user.save();
+
     return res.status(200).json({
       status: 200,
       message: "회원가입에 성공했습니다.",
