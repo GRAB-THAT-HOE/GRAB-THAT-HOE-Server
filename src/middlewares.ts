@@ -20,7 +20,7 @@ export const verifyToken = (req, res, next) => {
   }
 };
 
-export const upload = multer({
-  dest: "uploads/",
-  limits: { fileSize: 10000000 },
-});
+// export const upload = multer({
+//   dest: "uploads/",
+//   limits: { fileSize: 10000000 },
+// });
