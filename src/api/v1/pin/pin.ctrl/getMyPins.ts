@@ -1,11 +1,17 @@
 import { Response } from "express";
-import User from "../../../../models/User";
-import TokenRequestType from "../../../../type/TokenRequestType";
+import User from "../../../../entity/User";
+import Pin from "../../../../entity/Pin";
+import { getRepository } from "typeorm";
 
 export default async (req, res: Response) => {
-  const _id: string = req.user._id;
+  const { phone } = req.user;
   try {
-    const user = await User.findById(_id).populate("pins", "post");
+    const userRepository = getRepository(User);
+    const user: User = await userRepository.findOne({
+      where: {
+        phone: phone,
+      },
+    });
     if (!user) {
       return res.status(404).json({
         status: 404,
@@ -18,7 +24,13 @@ export default async (req, res: Response) => {
         message: "말뚝을 조회할 권한이 없습니다.",
       });
     }
-    const pins = user.pins;
+
+    const pinRepository = getRepository(Pin);
+    const pins = pinRepository.find({
+      where: {
+        userPhone: phone,
+      },
+    });
     return res.status(200).json({
       status: 200,
       message: "자신의 말뚝 조회에 성공했습니다.",
