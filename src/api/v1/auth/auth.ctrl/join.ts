@@ -1,8 +1,7 @@
 import "dotenv/config";
-import User from "../../../../models/User";
+import User from "../../../../entity/User";
 import { Request, Response } from "express";
 import UserJoinType from "../../../../type/UserJoinType";
-import { getRepository } from "typeorm";
 
 export default async (req: Request, res: Response) => {
   const user = new User();
@@ -22,13 +21,15 @@ export default async (req: Request, res: Response) => {
       });
     }
 
-    // await User.create({
-    //   name: data.name,
-    //   phone: data.phone,
-    //   introduction: data.introduction,
-    //   permission: data.permission,
-    //   mainlocation: data.mainlocation,
-    // });
+    user.phone = data.phone;
+    user.name = data.name;
+    user.introduction = data.introduction ? data.introduction : "";
+    user.permission = data.permission;
+    user.mainlocation = data.mainlocation;
+    user.sublocation = data.sublocation;
+
+    user.save();
+
     return res.status(200).json({
       status: 200,
       message: "회원가입에 성공했습니다.",
