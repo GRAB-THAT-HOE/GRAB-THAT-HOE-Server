@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import User from "./User";
 
-@Entity()
+@Entity("Post")
 export default class Post extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;

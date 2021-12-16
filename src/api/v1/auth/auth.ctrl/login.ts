@@ -6,7 +6,7 @@ import { getRepository } from "typeorm";
 export default async (req: Request, res: Response) => {
   const { phone } = req.body;
   try {
-    const userRepository = await getRepository(User);
+    const userRepository = getRepository(User);
     const user: User = await userRepository.findOne({
       where: {
         phone: phone,

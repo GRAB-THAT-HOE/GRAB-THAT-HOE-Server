@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity()
+@Entity("User")
 export default class User extends BaseEntity {
   @PrimaryColumn()
   phone: number;

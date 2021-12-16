@@ -9,7 +9,7 @@ import {
 import User from "./User";
 import Post from "./Post";
 
-@Entity()
+@Entity("Pin")
 export default class Pin extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;

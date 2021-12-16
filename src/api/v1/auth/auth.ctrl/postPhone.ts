@@ -3,7 +3,14 @@ import { getRepository } from "typeorm";
 
 export default async (req, res: Response) => {
   const { phone } = req.params;
+  console.log(req.body);
   const { confirmationcode } = req.body;
+  if (!confirmationcode) {
+    return res.stauts(400).json({
+      status: 400,
+      message: "인증번호가 보내지지 않았습니다.",
+    });
+  }
   try {
     // 인증번호 확인 로직
     if (Number(confirmationcode) !== 1234) {

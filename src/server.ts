@@ -11,6 +11,8 @@ const app = express();
 const logger = morgan("dev");
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(logger);
 app.use("/api", api);
 app.use("/public", express.static(path.join(__dirname, "../public")));

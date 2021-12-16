@@ -8,9 +8,9 @@ const ormconfig: ConnectionOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASENAME,
-  synchronize: true,
+  synchronize: false,
   logging: false,
-  entities: ["dist/entity/**/*.js"],
+  entities: ["**/src/entity/*{.ts,.js}"],
   migrations: ["src/migration/**/*.ts"],
   subscribers: ["src/subscriber/**/*.ts"],
   cli: {
