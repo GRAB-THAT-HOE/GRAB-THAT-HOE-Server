@@ -3,8 +3,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import Farmer from "./Farmer";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -35,12 +37,12 @@ export default class Post extends BaseEntity {
   @Column({
     length: 255,
   })
-  explanation: string;
+  explanation?: string;
 
   @Column({
     length: 255,
   })
-  additionalExplanation: string;
+  additionalExplanation?: string;
 
   @Column({
     nullable: false,
@@ -66,28 +68,36 @@ export default class Post extends BaseEntity {
   })
   giveSnack: boolean;
 
-  @Column()
+  @Column({
+    nullable: false,
+  })
   startDate: Date;
 
-  @Column()
+  @Column({
+    nullable: false,
+  })
   endDate: Date;
 
-  @Column("time")
+  @Column({
+    type: "time",
+    nullable: false,
+  })
   startTime: Date;
 
-  @Column("time")
+  @Column({
+    type: "time",
+    nullable: false,
+  })
   endTime: Date;
 
-  @Column("time")
+  @Column({
+    type: "time",
+    nullable: false,
+  })
   breakTime: Date;
 
   @Column()
-  img: string;
-
-  // @OneToMany(
-  //   (type) =>
-  // )
-  // joinedPeople:
+  img?: string;
 
   @Column({
     nullable: false,
@@ -100,4 +110,12 @@ export default class Post extends BaseEntity {
     default: 0,
   })
   pinNum: number;
+
+  @ManyToOne(() => Farmer, { onDelete: "SET NULL" })
+  owner: Farmer;
+
+  @Column({
+    nullable: false,
+  })
+  fk_farmer_idx: number;
 }
