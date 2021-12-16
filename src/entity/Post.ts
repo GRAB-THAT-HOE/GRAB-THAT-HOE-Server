@@ -125,7 +125,7 @@ export default class Post extends BaseEntity {
   @Column()
   img: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onUpdate: "CASCADE", onDelete: "CASCADE" })
   user: User;
 
   @Column({

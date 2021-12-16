@@ -14,10 +14,10 @@ export default class Pin extends BaseEntity {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onUpdate: "CASCADE", onDelete: "CASCADE" })
   user: User;
 
-  @ManyToOne(() => Post)
+  @ManyToOne(() => Post, { onUpdate: "CASCADE", onDelete: "CASCADE" })
   post: Post;
 
   @Column()
