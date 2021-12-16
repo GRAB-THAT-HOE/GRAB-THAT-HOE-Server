@@ -3,8 +3,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import User from "./User";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -84,10 +86,8 @@ export default class Post extends BaseEntity {
   @Column()
   img: string;
 
-  // @OneToMany(
-  //   (type) =>
-  // )
-  // joinedPeople:
+  @ManyToOne(() => User)
+  user: User;
 
   @Column({
     nullable: false,
@@ -100,4 +100,10 @@ export default class Post extends BaseEntity {
     default: 0,
   })
   pinNum: number;
+
+  @Column({
+    nullable: false,
+    default: 0,
+  })
+  isConnected: number;
 }

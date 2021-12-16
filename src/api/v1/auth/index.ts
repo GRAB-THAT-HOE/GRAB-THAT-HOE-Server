@@ -6,5 +6,7 @@ const router = Router();
 
 router.post("/join", join);
 router.post("/login", login);
+router.get("/phone");
+router.post("/phone");
 
 export default router;
