@@ -12,15 +12,17 @@ export default async (req: Request, res: Response) => {
       },
     });
     if (user) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(200).json({
+        status: 200,
         message: "해당 전화번호를 가진 계정이 이미 존재합니다.",
+        isExist: true,
       });
     }
     // 인증번호 발송 API 사용
     return res.status(200).json({
       status: 200,
       message: "인증번호가 발송되었습니다.",
+      isExist: false,
     });
   } catch (error) {
     return res.status(500).json({

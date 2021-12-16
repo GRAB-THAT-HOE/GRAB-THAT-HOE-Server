@@ -7,6 +7,7 @@ import PostRequestType from "../../../../type/PostRequestType";
 export default async (req, res: Response) => {
   const post = new Post();
 
+  const { file } = req;
   const { phone } = req.user;
   const data: PostRequestType = req.body;
   try {
@@ -50,7 +51,7 @@ export default async (req, res: Response) => {
     post.startTime = data.startTime;
     post.endTime = data.endTime;
     post.breakTime = data.breakTime;
-    post.img = "test";
+    post.img = file ? file.path : "";
 
     await post.save();
 

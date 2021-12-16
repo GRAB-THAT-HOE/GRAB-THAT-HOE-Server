@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyToken } from "../../../middlewares";
+import { upload, verifyToken } from "../../../middlewares";
 import createPost from "./post.ctrl/createPost";
 import deletePost from "./post.ctrl/deletePost";
 import getMyPosts from "./post.ctrl/getMyPosts";
@@ -13,7 +13,7 @@ router.get("/", getPosts);
 router.get("/my", verifyToken, getMyPosts);
 router.get("/:idx", verifyToken, getPost);
 
-router.post("/", verifyToken, createPost);
+router.post("/", verifyToken, upload.single("img"), createPost);
 
 router.put("/:idx", verifyToken, modifyPost);
 
