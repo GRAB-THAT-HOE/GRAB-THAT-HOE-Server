@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
-import Post from "../../../../models/Post";
+import { getRepository } from "typeorm";
+import Post from "../../../../entity/Post";
 
 export default async (req: Request, res: Response) => {
   try {
-    const posts = await Post.find({}).sort({ salary: -1 }); // 추후 위치 기반 서비스 도입 시 위치로 우선 정렬
+    const postRepository = getRepository(Post);
+    const posts = await postRepository.find();
     return res.status(200).json({
       status: 200,
       message: "포스팅 조회에 성공했습니다.",

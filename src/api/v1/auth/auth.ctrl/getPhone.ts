@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import User from "../../../../entity/User";
 
 export default async (req: Request, res: Response) => {
-  const { phone } = req.body;
+  const { phone } = req.params;
   try {
     const userRepository = await getRepository(User);
     const user: User = await userRepository.findOne({

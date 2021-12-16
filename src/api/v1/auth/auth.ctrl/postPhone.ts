@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 
 export default async (req, res: Response) => {
+  const { phone } = req.params;
   const { confirmationcode } = req.body;
   try {
     // 인증번호 확인 로직
