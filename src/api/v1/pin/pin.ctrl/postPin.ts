@@ -1,14 +1,19 @@
 import { Response } from "express";
-import TokenRequestType from "../../../../type/TokenRequestType";
-import User from "../../../../models/User";
-import Post from "../../../../models/Post";
-import Pin from "../../../../models/Pin";
+import User from "../../../../entity/User";
+import Post from "../../../../entity/Post";
+import Pin from "../../../../entity/Pin";
+import { getRepository } from "typeorm";
 
 export default async (req, res: Response) => {
-  const _id: string = req.user._id;
-  const idx: string = req.params.idx;
+  const { phone } = req.user;
+  const { idx } = req.params;
   try {
-    const user = await User.findById(_id);
+    const userRepository = getRepository(User);
+    const user: User = await userRepository.findOne({
+      where: {
+        phone: phone,
+      },
+    });
     if (!user) {
       return res.status(404).json({
         status: 404,
@@ -21,19 +26,22 @@ export default async (req, res: Response) => {
         message: "말뚝 기능을 실행할 권한이 없습니다.",
       });
     }
-    const post = await Post.findById(idx);
+    const postRepository = getRepository(Post);
+    const post: Post = await postRepository.findOne({
+      where: {
+        id: idx,
+      },
+    });
     if (!post) {
       return res.status(404).json({
         status: 404,
         message: "말뚝 기능을 실행할 포스팅을 찾을 수 없습니다.",
       });
     }
-    const pin = await Pin.create({
-      owner: _id,
-      post: post._id,
-    });
-    user.pins.push(pin._id);
-    await user.save();
+    const pin: Pin = new Pin();
+    pin.user = user;
+    pin.post = post;
+    await pin.save();
     post.pinNum += 1;
     await post.save();
     return res.status(200).json({

@@ -52,7 +52,7 @@ export default async (req, res: Response) => {
     post.breakTime = data.breakTime;
     post.img = "test";
 
-    post.save();
+    await post.save();
 
     return res.status(200).json({
       status: 200,
