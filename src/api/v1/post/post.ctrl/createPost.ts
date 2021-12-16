@@ -11,7 +11,7 @@ export default async (req, res: Response) => {
   const data: PostRequestType = req.body;
   try {
     const userRepository = getRepository(User);
-    const user = await userRepository.findOne({
+    const user: User = await userRepository.findOne({
       where: {
         phone: phone,
       },

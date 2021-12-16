@@ -1,12 +1,17 @@
 import { Response } from "express";
-import Post from "../../../../models/Post";
-import TokenRequestType from "../../../../type/TokenRequestType";
+import { getRepository } from "typeorm";
+import Post from "../../../../entity/Post";
 
 export default async (req, res: Response) => {
-  const _id: string = req.user._id;
-  const idx: string = req.params.idx;
+  const { phone } = req.user;
+  const { idx } = req.params;
   try {
-    const post = await Post.findById(idx);
+    const postRepository = getRepository(Post);
+    const post: Post = await postRepository.findOne({
+      where: {
+        id: idx,
+      },
+    });
     let isOwner: boolean = false;
     if (!post) {
       return res.status(404).json({
@@ -14,7 +19,7 @@ export default async (req, res: Response) => {
         message: "조회할 게시물을 찾지 못했습니다.",
       });
     }
-    if (String(post.owner) === _id) {
+    if (post.user === phone) {
       isOwner = true;
     }
     return res.status(200).json({

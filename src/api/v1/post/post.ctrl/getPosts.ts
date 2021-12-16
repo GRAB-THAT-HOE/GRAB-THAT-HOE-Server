@@ -5,7 +5,7 @@ import Post from "../../../../entity/Post";
 export default async (req: Request, res: Response) => {
   try {
     const postRepository = getRepository(Post);
-    const posts = await postRepository.find();
+    const posts: Post[] = await postRepository.find();
     return res.status(200).json({
       status: 200,
       message: "포스팅 조회에 성공했습니다.",
