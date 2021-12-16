@@ -52,6 +52,7 @@ export default async (req, res: Response) => {
     post.endTime = data.endTime;
     post.breakTime = data.breakTime;
     post.img = file ? file.path : "";
+    post.user = user;
 
     await post.save();
 

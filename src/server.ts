@@ -2,7 +2,6 @@ import "dotenv/config";
 import * as morgan from "morgan";
 import * as express from "express";
 import * as cors from "cors";
-import * as path from "path";
 import api from "./api";
 import { createConnection } from "typeorm";
 import connectOptions from "../ormconfig";
@@ -16,7 +15,7 @@ app.use(logger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", api);
-app.use("/public", express.static(path.join(__dirname, "../public")));
+app.use("/uploads", express.static("uploads"));
 
 createConnection(connectOptions)
   .then((connection) => {
