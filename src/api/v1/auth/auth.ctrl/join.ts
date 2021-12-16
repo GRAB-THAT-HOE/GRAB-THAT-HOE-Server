@@ -30,7 +30,7 @@ export default async (req, res: Response) => {
     user.sublocation = data.sublocation;
     user.avatar = file ? file.path : "";
 
-    user.save();
+    await user.save();
 
     return res.status(200).json({
       status: 200,

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import User from "../../../../entity/User";
 import { getRepository } from "typeorm";
 
