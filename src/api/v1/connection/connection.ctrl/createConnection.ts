@@ -47,6 +47,12 @@ export default async (req, res: Response) => {
         },
       ],
     });
+    if (connection) {
+      return res.status(400).json({
+        status: 400,
+        message: "이미 연결되어 있습니다.",
+      });
+    }
 
     connection.farmer = post.user;
     connection.worker = phone;
