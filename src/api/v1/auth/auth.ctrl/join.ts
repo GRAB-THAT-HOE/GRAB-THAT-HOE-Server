@@ -1,12 +1,13 @@
 import "dotenv/config";
 import User from "../../../../entity/User";
-import { Request, Response } from "express";
+import { Response } from "express";
 import UserJoinType from "../../../../type/UserJoinType";
 
-export default async (req: Request, res: Response) => {
+export default async (req, res: Response) => {
   const user = new User();
 
   const data: UserJoinType = req.body;
+  const { file } = req;
   try {
     if (data.permission !== 0 && data.permission !== 1) {
       return res.status(400).json({
@@ -27,6 +28,7 @@ export default async (req: Request, res: Response) => {
     user.permission = data.permission;
     user.mainlocation = data.mainlocation;
     user.sublocation = data.sublocation;
+    user.avatar = file ? file.path : "";
 
     user.save();
 

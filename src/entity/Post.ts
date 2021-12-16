@@ -23,7 +23,13 @@ export default class Post extends BaseEntity {
     length: 255,
     nullable: false,
   })
-  location: string;
+  mainlocation: string;
+
+  @Column({
+    length: 255,
+    nullable: false,
+  })
+  sublocation: string;
 
   @Column({
     nullable: false,
@@ -71,30 +77,50 @@ export default class Post extends BaseEntity {
   @Column({
     nullable: false,
   })
-  startDate: Date;
+  startDateYear: number;
 
   @Column({
     nullable: false,
   })
-  endDate: Date;
+  startDateMonth: number;
+
+  @Column({
+    nullable: false,
+  })
+  startDateDay: number;
+
+  @Column({
+    nullable: false,
+  })
+  endDateYear: number;
+
+  @Column({
+    nullable: false,
+  })
+  endDateMonth: number;
+
+  @Column({
+    nullable: false,
+  })
+  endDateDay: number;
 
   @Column({
     type: "time",
     nullable: false,
   })
-  startTime: Date;
+  startTime: number;
 
   @Column({
     type: "time",
     nullable: false,
   })
-  endTime: Date;
+  endTime: number;
 
   @Column({
     type: "time",
     nullable: false,
   })
-  breakTime: Date;
+  breakTime: number;
 
   @Column()
   img: string;
@@ -118,5 +144,5 @@ export default class Post extends BaseEntity {
     nullable: false,
     default: 0,
   })
-  isConnected: number;
+  isFinished: number;
 }

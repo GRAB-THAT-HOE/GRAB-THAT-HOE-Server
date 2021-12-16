@@ -31,4 +31,7 @@ export default class User extends BaseEntity {
     nullable: false,
   })
   sublocation: string;
+
+  @Column()
+  avatar?: string;
 }

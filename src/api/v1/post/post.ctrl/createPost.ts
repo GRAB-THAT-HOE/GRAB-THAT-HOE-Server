@@ -1,14 +1,21 @@
 import { Response } from "express";
+import User from "../../../../entity/User";
+import Post from "../../../../entity/Post";
+import { getRepository } from "typeorm";
 import PostRequestType from "../../../../type/PostRequestType";
-import User from "../../../../models/User";
-import Post from "../../../../models/Post";
-import TokenRequestType from "../../../../type/TokenRequestType";
 
 export default async (req, res: Response) => {
-  const _id: string = req.user._id;
-  const data = req.body;
+  const post = new Post();
+
+  const { phone } = req.user;
+  const data: PostRequestType = req.body;
   try {
-    const user = await User.findById(_id);
+    const userRepository = getRepository(User);
+    const user = await userRepository.findOne({
+      where: {
+        phone: phone,
+      },
+    });
     if (!user) {
       return res.status(404).json({
         status: 404,
@@ -18,27 +25,32 @@ export default async (req, res: Response) => {
     if (user.permission === 1) {
       return res.status(403).json({
         status: 403,
-        message: "포스팅을 조회할 권한이 없습니다.",
+        message: "게시물을 업로드할 권한이 없습니다.",
       });
     }
-    await Post.create({
-      owner: user._id,
-      title: data.title,
-      location: data.location,
-      explanation: data.explanation,
-      salary: data.salary,
-      additionalExplanation: data.additionalExplanation,
-      isDisabled: data.isDisabled,
-      isForeign: data.isForeign,
-      giveRoomAndBoard: data.giveRoomAndBoard,
-      giveSnack: data.giveSnack,
-      startDate: data.startDate,
-      endDate: data.endDate,
-      startTime: data.startTime,
-      endTime: data.endTime,
-      breakTime: data.breakTime,
-      peopleNum: data.peopleNum,
-    });
+
+    post.title = data.title;
+    post.mainlocation = data.mainlocation;
+    post.sublocation = data.sublocation;
+    post.explanation = data.explanation;
+    post.salary = data.salary;
+    post.additionalExplanation = data.additionalExplanation
+      ? data.additionalExplanation
+      : "";
+    post.isDisabled = data.isDisabled;
+    post.isForeign = data.isForeign;
+    post.giveRoomAndBoard = data.giveRoomAndBoard;
+    post.giveSnack = data.giveSnack;
+    post.startDateYear = data.startDateYear;
+    post.startDateMonth = data.startDateMonth;
+    post.startDateDay = data.startDateDay;
+    post.startTime = data.startTime;
+    post.endTime = data.endTime;
+    post.breakTime = data.breakTime;
+    post.img = "test";
+
+    post.save();
+
     return res.status(200).json({
       status: 200,
       message: "포스팅에 성공했습니다.",
