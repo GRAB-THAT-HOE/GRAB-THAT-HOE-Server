@@ -36,6 +36,18 @@ export default async (req, res: Response) => {
       });
     }
 
+    const connectionRepository = getRepository(Connection);
+    const connection: Connection = await connectionRepository.findOne({
+      where: [
+        {
+          post: idx,
+        },
+        {
+          worker: phone,
+        },
+      ],
+    });
+
     connection.farmer = post.user;
     connection.worker = phone;
 
