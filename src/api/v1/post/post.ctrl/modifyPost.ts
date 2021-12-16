@@ -4,7 +4,7 @@ import TokenRequestType from "../../../../type/TokenRequestType";
 import PostRequestType from "../../../../type/PostRequestType";
 import User from "../../../../models/User";
 
-export default async (req: TokenRequestType, res: Response) => {
+export default async (req, res: Response) => {
   const _id: string = req.user._id;
   const idx: string = req.params.idx;
   const data: PostRequestType = req.body;

@@ -4,7 +4,7 @@ import User from "../../../../models/User";
 import Post from "../../../../models/Post";
 import Pin from "../../../../models/Pin";
 
-export default async (req: TokenRequestType, res: Response) => {
+export default async (req, res: Response) => {
   const _id: string = req.user._id;
   const idx: string = req.params.idx;
   try {

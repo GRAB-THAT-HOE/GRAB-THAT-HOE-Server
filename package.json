@@ -4,7 +4,7 @@
   "description": "connect between farmer and worker",
   "main": "src/server.ts",
   "scripts": {
-    "start": "nodemon --watch src --delay 1 --exec ts-node src/server.ts"
+    "start": "nodemon --watch src --exec ts-node src/server.ts"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "mongoose": "^5.13.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
+    "mysql": "^2.18.1",
     "nodemailer": "^6.6.3",
     "typeorm": "^0.2.40"
   },

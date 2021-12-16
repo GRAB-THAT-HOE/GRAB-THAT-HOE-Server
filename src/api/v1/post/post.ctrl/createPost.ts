@@ -4,9 +4,9 @@ import User from "../../../../models/User";
 import Post from "../../../../models/Post";
 import TokenRequestType from "../../../../type/TokenRequestType";
 
-export default async (req: TokenRequestType, res: Response) => {
+export default async (req, res: Response) => {
   const _id: string = req.user._id;
-  const data: PostRequestType = req.body;
+  const data = req.body;
   try {
     const user = await User.findById(_id);
     if (!user) {

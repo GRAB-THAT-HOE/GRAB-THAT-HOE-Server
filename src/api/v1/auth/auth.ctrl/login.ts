@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import User from "../../../../models/User";
+import User from "../../../../entity/User";
 
 export default async (req: Request, res: Response) => {
   const { phone } = req.body;
-  // 전화 SMS 인증
   try {
     const user = await User.findOne({ phone });
     const token = jwt.sign(

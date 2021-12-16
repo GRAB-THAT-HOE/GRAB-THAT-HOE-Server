@@ -1,5 +1,4 @@
 import "dotenv/config";
-import "./db";
 import * as morgan from "morgan";
 import * as express from "express";
 import * as cors from "cors";
