@@ -3,13 +3,10 @@ import * as multer from "multer";
 
 export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-  console.log(token);
-  console.log(req.headers);
   try {
     req.user = jwt.verify(token, process.env.JWT_SECRET);
     return next();
   } catch (error) {
-    console.log(error);
     if (error.name === "TokenExpiredError") {
       return res.status(419).json({
         status: 419,
